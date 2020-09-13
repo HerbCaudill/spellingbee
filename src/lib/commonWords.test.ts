@@ -1,6 +1,6 @@
 import { commonWords } from './commonWords'
 
-describe.skip('commonWords', () => {
+describe('commonWords', () => {
   it('should contain common words', () => {
     expect(commonWords).toContain('THE')
     expect(commonWords).toContain('HOUSE')

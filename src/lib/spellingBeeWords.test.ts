@@ -1,6 +1,6 @@
 import { spellingBeeWords } from './spellingBeeWords'
 
-describe.skip('spellingBeeWords', () => {
+describe('spellingBeeWords', () => {
   it('should only contain words more than 3 letters long', () => {
     expect(spellingBeeWords.A).toBeUndefined()
     expect(spellingBeeWords.ANY).toBeUndefined()

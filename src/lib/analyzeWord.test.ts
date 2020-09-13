@@ -1,6 +1,6 @@
 import { analyzeWord } from './analyzeWord'
 
-describe.skip('analyzeWord', () => {
+describe('analyzeWord', () => {
   it('should return useful information about the word and its distinct letters', () => {
     expect(analyzeWord('VIRTUAL')).toEqual({
       length: 7,
