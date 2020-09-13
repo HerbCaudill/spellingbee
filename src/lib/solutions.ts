@@ -1,5 +1,5 @@
 ﻿import { distinctLetters } from './distinctLetters'
-import { words } from './words'
+import words from '../data/en.json'
 
 export const solutions = (letters: string) => {
   if (letters.length !== 7) throw new Error('A game has exactly 7 letters')
