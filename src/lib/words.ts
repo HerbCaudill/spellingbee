@@ -1,12 +1,5 @@
-﻿import { commonWords } from './commonWords'
-import { WordAnalysis, analyzeWord } from './analyzeWord'
+﻿import { scrabbleWords } from './scrabbleWords'
+import { frequency } from './frequency'
 
-export const words: AnalyzedWordList = commonWords.reduce((result, word) => {
-  const analyzedWord = analyzeWord(word)
-  if (analyzedWord.length >= 4 && analyzedWord.distinct <= 7) {
-    result[word] = analyzedWord
-  }
-  return result
-}, {} as AnalyzedWordList)
-
-export type AnalyzedWordList = { [word: string]: WordAnalysis }
+// only include words that are in frequency list
+export const words = scrabbleWords.filter(w => w in frequency)

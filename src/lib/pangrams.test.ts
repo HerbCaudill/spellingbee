@@ -6,8 +6,4 @@ describe('pangrams', () => {
     expect(pangrams).toContain('VIRTUAL')
     expect(pangrams).toContain('LOCOMOTION')
   })
-
-  // it('should have the expected length', () => {
-  //   expect(pangrams).toHaveLength(12672)
-  // })
 })
