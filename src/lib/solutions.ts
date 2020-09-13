@@ -1,7 +1,5 @@
 ﻿import { distinctLetters } from './distinctLetters'
-import _words from '../data/en.json'
-import { AnalyzedWordList } from './spellingBeeWords'
-const words = _words as AnalyzedWordList
+import { words } from './words'
 
 export const solutions = (letters: string) => {
   if (letters.length !== 7) throw new Error('A game has exactly 7 letters')

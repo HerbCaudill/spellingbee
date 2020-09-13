@@ -1,7 +1,7 @@
 import { solutions } from './solutions'
 
 describe('solutions', () => {
-  it('TVIRUAL', () => {
+  test('TVIRUAL', () => {
     const words = solutions('TVIRUAL')
 
     expect(words).not.toContain('BANANA')
@@ -11,7 +11,7 @@ describe('solutions', () => {
     expect(words).not.toContain('ALLUVIAL') // doesn't have T
   })
 
-  it('VTIRUAL', () => {
+  test('VTIRUAL', () => {
     const words = solutions('VTIRUAL')
 
     expect(words).not.toContain('BANANA')

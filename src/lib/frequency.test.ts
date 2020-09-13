@@ -1,4 +1,4 @@
-import { frequency } from './frequency'
+import { frequency, MAX_VOCABULARY } from './frequency'
 
 describe('frequency', () => {
   it('parses word frequencies', () => {
@@ -6,6 +6,6 @@ describe('frequency', () => {
   })
 
   it('has the expected number of keys', () => {
-    expect(Object.keys(frequency).length).toBe(97566)
+    expect(Object.keys(frequency).length).toBe(MAX_VOCABULARY)
   })
 })
