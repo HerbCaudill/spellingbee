@@ -1,22 +1,14 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import { solutions as getSolutions } from '../lib/solutions'
-
-enum Message {
-  'NOT_A_WORD',
-  'TOO_SHORT',
-  'BAD_LETTERS',
-  'MISSING_KEY',
-  'ALREADY_FOUND',
-  'GOOD',
-}
+import { Message } from './Message'
 
 const initialState = {
   input: '',
   found: [],
 } as State
 
-export default function App({ puzzle }: AppProps) {
-  const keyLetter = puzzle[0]
+export default function App({ letters }: AppProps) {
+  const keyLetter = letters[0]
   const [solutions, setSolutions] = useState<string[]>([])
 
   const reducer = (state: State, action: Action) => {
@@ -38,7 +30,7 @@ export default function App({ puzzle }: AppProps) {
         else if (found.includes(input)) message = Message.ALREADY_FOUND
         else if (input.length < 4) message = Message.TOO_SHORT
         else if (!input.includes(keyLetter)) message = Message.MISSING_KEY
-        else if (input.split('').some(l => !puzzle.includes(l))) message = Message.BAD_LETTERS
+        else if (input.split('').some(l => !letters.includes(l))) message = Message.BAD_LETTERS
         else {
           message = Message.GOOD
           found.push(input)
@@ -50,7 +42,7 @@ export default function App({ puzzle }: AppProps) {
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  useEffect(() => setSolutions(getSolutions(puzzle)), [puzzle])
+  useEffect(() => setSolutions(getSolutions(letters)), [letters])
 
   useEffect(() => {
     function downHandler({ key }: KeyboardEvent) {
@@ -66,7 +58,7 @@ export default function App({ puzzle }: AppProps) {
 
   return (
     <div>
-      <div>{puzzle}</div>
+      <Puzzle letters={letters} />
       <div>you typed: {state.input}</div>
       <div>
         words:
@@ -93,5 +85,8 @@ type Action =
   | { type: 'BACKSPACE' }
 
 interface AppProps {
-  puzzle: string
+  letters: string
+}
+const Puzzle = ({ letters }: { letters: string }) => {
+  return <div>{letters}</div>
 }
