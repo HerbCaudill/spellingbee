@@ -1,12 +1,11 @@
 import React, { Reducer, useEffect, useReducer } from 'react'
+import { isAlpha } from '../lib/isAlpha'
+import { randomSort } from '../lib/randomSort'
 import { solutions as getSolutions } from '../lib/solutions'
+import { Action, AppProps, Message, State } from '../Types'
 import { FoundWords } from './FoundWords'
 import { InputDisplay } from './InputDisplay'
-import { isAlpha } from './isAlpha'
-import { Message } from './Message'
 import { Puzzle } from './Puzzle'
-import { randomSort } from './randomSort'
-import { Action, AppProps, State } from './Types'
 
 const reducer: Reducer<State, Action> = (state, action) => {
   state.message = undefined

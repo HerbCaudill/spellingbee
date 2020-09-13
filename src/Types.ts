@@ -1,5 +1,3 @@
-import { Message } from './Message'
-
 export interface State {
   input: string
   found: string[]
@@ -22,4 +20,13 @@ export type Action =
 
 export interface AppProps {
   letters: string
+}
+
+export enum Message {
+  'NOT_A_WORD',
+  'TOO_SHORT',
+  'BAD_LETTERS',
+  'MISSING_KEY',
+  'ALREADY_FOUND',
+  'GOOD',
 }
