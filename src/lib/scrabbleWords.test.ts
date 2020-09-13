@@ -1,6 +1,6 @@
 import { scrabbleWords } from './scrabbleWords'
 
-describe('scrabbleWords', () => {
+describe.skip('scrabbleWords', () => {
   it('should start out as expected', () => {
     expect(scrabbleWords.slice(0, 9)).toEqual([
       'AA',

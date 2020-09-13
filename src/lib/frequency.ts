@@ -1,7 +1,8 @@
 ﻿import fs from 'fs'
+import path from 'path'
 
 export const frequency: FrequencyMap = fs
-  .readFileSync('./data/norvig.txt')
+  .readFileSync(path.join(__dirname, '../data/norvig.txt'))
   .toString()
   .split('\n')
   .map((l: string) => l.split('\t'))
