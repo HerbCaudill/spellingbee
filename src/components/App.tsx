@@ -5,6 +5,7 @@ import { solutions as getSolutions } from '../lib/solutions'
 import { Action, AppProps, Message, State } from '../Types'
 import { FoundWords } from './FoundWords'
 import { InputDisplay } from './InputDisplay'
+import { MessageDisplay } from './MessageDisplay'
 import { Puzzle } from './Puzzle'
 
 const reducer: Reducer<State, Action> = (state, action) => {
@@ -74,25 +75,4 @@ export default function App({ letters }: AppProps) {
       <FoundWords words={state.found} />
     </div>
   )
-}
-
-export const MessageDisplay = ({ message }: { message: Message | undefined }) => {
-  const getDisplayMessage = (message: Message) => {
-    switch (message) {
-      case Message.ALREADY_FOUND:
-        return 'Already found'
-      case Message.BAD_LETTERS:
-        return 'Bad letters'
-      case Message.GOOD:
-        return 'Good!!'
-      case Message.MISSING_KEY:
-        return 'Missing center letter'
-      case Message.NOT_A_WORD:
-        return 'Not in word list'
-      case Message.TOO_SHORT:
-        return 'Too short'
-    }
-    return ''
-  }
-  return message === undefined ? <React.Fragment /> : <div>{getDisplayMessage(message)}</div>
 }

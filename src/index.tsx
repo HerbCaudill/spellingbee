@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
 import App from './components/App'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App letters="TVIRUAL" />
-  </React.StrictMode>,
+  <div className="p-3">
+    <React.StrictMode>
+      <App letters="TVIRUAL" />
+    </React.StrictMode>
+  </div>,
   document.getElementById('root')
 )
