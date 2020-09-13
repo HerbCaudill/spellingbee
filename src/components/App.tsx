@@ -1,92 +1,99 @@
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { Reducer, useEffect, useReducer } from 'react'
 import { solutions as getSolutions } from '../lib/solutions'
+import { FoundWords } from './FoundWords'
+import { InputDisplay } from './InputDisplay'
+import { isAlpha } from './isAlpha'
 import { Message } from './Message'
+import { Puzzle } from './Puzzle'
+import { randomSort } from './randomSort'
+import { Action, AppProps, State } from './Types'
 
-const initialState = {
-  input: '',
-  found: [],
-} as State
+const reducer: Reducer<State, Action> = (state, action) => {
+  state.message = undefined
+  const { input, found, solutions, letters, keyLetter, displayLetters } = state
+  switch (action.type) {
+    case 'ALPHA':
+      return { ...state, input: input + action.payload }
+
+    case 'BACKSPACE':
+      return { ...state, input: input.slice(0, input.length - 1) }
+
+    case 'ESCAPE':
+      return { ...state, input: '' }
+
+    case 'ENTER': {
+      let message: Message
+      let _found = [...found]
+      if (found.includes(input)) message = Message.ALREADY_FOUND
+      else if (input.length < 4) message = Message.TOO_SHORT
+      else if (!input.includes(keyLetter)) message = Message.MISSING_KEY
+      else if (input.split('').some(l => !letters.includes(l))) message = Message.BAD_LETTERS
+      else if (!solutions.includes(input)) message = Message.NOT_A_WORD
+      else {
+        message = Message.GOOD
+        _found.push(input)
+      }
+      return { ...state, input: '', message, found: _found }
+    }
+
+    case 'SHUFFLE':
+      return { ...state, displayLetters: displayLetters.sort(randomSort) }
+  }
+  return state
+}
 
 export default function App({ letters }: AppProps) {
-  const keyLetter = letters[0]
-  const [solutions, setSolutions] = useState<string[]>([])
-
-  const reducer = (state: State, action: Action) => {
-    state.message = undefined
-    const { input, found } = state
-    switch (action.type) {
-      case 'ALPHA':
-        return { ...state, input: input + action.payload }
-
-      case 'BACKSPACE':
-        return { ...state, input: input.slice(0, input.length - 1) }
-
-      case 'ESCAPE':
-        return { ...state, input: '' }
-
-      case 'ENTER': {
-        let message: Message
-        if (!solutions.includes(input)) message = Message.NOT_A_WORD
-        else if (found.includes(input)) message = Message.ALREADY_FOUND
-        else if (input.length < 4) message = Message.TOO_SHORT
-        else if (!input.includes(keyLetter)) message = Message.MISSING_KEY
-        else if (input.split('').some(l => !letters.includes(l))) message = Message.BAD_LETTERS
-        else {
-          message = Message.GOOD
-          found.push(input)
-        }
-        return { ...state, message, input: '', found }
-      }
-    }
-  }
-
-  const [state, dispatch] = useReducer(reducer, initialState)
-
-  useEffect(() => setSolutions(getSolutions(letters)), [letters])
+  const [keyLetter, ...otherLetters] = letters.split('')
 
   useEffect(() => {
-    function downHandler({ key }: KeyboardEvent) {
+    function keyHandler({ key }: KeyboardEvent) {
       if (isAlpha(key)) dispatch({ type: 'ALPHA', payload: key.toUpperCase() })
       else if (key === 'Delete' || key === 'Backspace') dispatch({ type: 'BACKSPACE' })
       else if (key === 'Escape') dispatch({ type: 'ESCAPE' })
       else if (key === 'Enter') dispatch({ type: 'ENTER' })
+      else if (key === 'Space') dispatch({ type: 'SHUFFLE' })
     }
 
-    window.addEventListener('keydown', downHandler)
-    return () => window.removeEventListener('keydown', downHandler)
+    window.addEventListener('keydown', keyHandler)
+    return () => window.removeEventListener('keydown', keyHandler)
   }, [])
+
+  const [state, dispatch] = useReducer(reducer, {
+    input: '',
+    found: [],
+    letters,
+    keyLetter,
+    solutions: getSolutions(letters),
+    displayLetters: otherLetters,
+  })
 
   return (
     <div>
-      <Puzzle letters={letters} />
-      <div>you typed: {state.input}</div>
-      <div>
-        words:
-        {state.found.map((word, i) => (
-          <p key={i}>{word}</p>
-        ))}
-      </div>
+      <MessageDisplay message={state.message} />
+      <InputDisplay input={state.input} />
+      <Puzzle keyLetter={keyLetter} displayLetters={state.displayLetters} />
+      <FoundWords words={state.found} />
     </div>
   )
 }
 
-const isAlpha = (key: string) => /^[A-Za-z]$/.test(key)
-
-interface State {
-  input: string
-  found: string[]
-  message?: Message
-}
-
-type Action =
-  | { type: 'ALPHA'; payload: string }
-  | { type: 'ENTER' }
-  | { type: 'ESCAPE' }
-  | { type: 'BACKSPACE' }
-
-interface AppProps {
-  letters: string
-}
-const Puzzle = ({ letters }: { letters: string }) => {
-  return <div>{letters}</div>
+export const MessageDisplay = ({ message }: { message: Message | undefined }) => {
+  const getDisplayMessage = (message: Message) => {
+    switch (message) {
+      case Message.ALREADY_FOUND:
+        return 'Already found'
+      case Message.BAD_LETTERS:
+        return 'Bad letters'
+      case Message.GOOD:
+        return 'Good!!'
+      case Message.MISSING_KEY:
+        return 'Missing center letter'
+      case Message.NOT_A_WORD:
+        return 'Not in word list'
+      case Message.TOO_SHORT:
+        return 'Too short'
+    }
+    return ''
+  }
+  return message === undefined ? <React.Fragment /> : <div>{getDisplayMessage(message)}</div>
 }
