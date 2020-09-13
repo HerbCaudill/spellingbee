@@ -1,7 +1,7 @@
 import { frequency } from './frequency'
 
 describe('frequency', () => {
-  it('parses word frequences from norvig', () => {
+  it('parses word frequencies', () => {
     expect(frequency['WE']).toEqual(2057296224)
   })
 

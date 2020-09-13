@@ -1,5 +1,5 @@
 ﻿import { distinctLetters } from './distinctLetters'
-import _words from '../data/words.json'
+import _words from '../data/en.json'
 import { AnalyzedWordList } from './spellingBeeWords'
 const words = _words as AnalyzedWordList
 

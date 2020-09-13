@@ -1,5 +1,6 @@
 {
   "name": "spellingbee",
+  "description": "Clone of NYT Spelling Bee game",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "cli": "ts-node ./src/cli.ts",
+    "build:words": "ts-node --project ./src/scripts/tsconfig.json ./src/scripts/buildWordList.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -32,9 +33,7 @@
     "trailingComma": "es5",
     "arrowParens": "avoid"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "eslintConfig": {},
   "browserslist": {
     "production": [
       ">0.2%",
