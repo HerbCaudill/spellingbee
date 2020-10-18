@@ -1,34 +1,27 @@
 import React from 'react'
-import { makeRandom } from '../lib/makeRandom'
-import { Message } from '../types'
+import { MessageType } from '../types'
 
-const random = makeRandom('1')
+type MessageDisplayProps = {
+  message?: string
+  messageType?: MessageType
+}
 
-export const MessageDisplay = ({ message }: { message: Message | undefined }) => {
-  const getDisplayMessage = (message: Message): string => {
-    switch (message) {
-      case Message.ALREADY_FOUND:
-        return 'Already found!'
-      case Message.BAD_LETTERS:
-        return 'Bad letters'
-      case Message.GOOD:
-        return 'Good!'
-      case Message.EXCELLENT:
-        return random.pick(['Nice!', 'Excellent!', 'Sweet!'])
-      case Message.PANGRAM:
-        return 'Pangram!'
-      case Message.MISSING_KEY:
-        return 'Missing center letter!'
-      case Message.NOT_A_WORD:
-        return 'Not in word list!'
-      case Message.TOO_SHORT:
-        return 'Too short!'
-    }
-    return ''
+const getColor = (messageType?: MessageType) => {
+  switch (messageType) {
+    case MessageType.REJECT:
+      return 'bg-black border-black'
+    case MessageType.ACCEPT:
+      return 'bg-white border-black'
+    case MessageType.PANGRAM:
+      return 'bg-yellow-500 border-yellow-600'
+    default:
+      return ''
   }
+}
+export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message, messageType }) => {
   return (
-    <div className="h-5 text-sm text-center">
-      {message === undefined ? '' : getDisplayMessage(message)}
+    <div className={`h-5 text-sm text-center ${getColor(messageType)}`}>
+      {message === undefined ? '' : message}
     </div>
   )
 }
