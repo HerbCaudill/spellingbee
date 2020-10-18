@@ -2,6 +2,7 @@ import { Reducer } from 'react'
 import { randomSort } from '../lib/randomSort'
 import { Action, State, MessageType } from '../types'
 import { isPangram } from '../lib/isPangram'
+import { getScore } from '../lib/getScore'
 
 function getAffirmation(input: string) {
   switch (input.length) {
@@ -21,6 +22,7 @@ function getAffirmation(input: string) {
 export const reducer: Reducer<State, Action> = (state, action) => {
   const { input, found, solutions, letters, keyLetter, score, otherLetters } = state
   state.message = undefined
+  state.messageType = undefined
 
   const getMessage = (s: string) => {
     let message: string | undefined
@@ -55,7 +57,18 @@ export const reducer: Reducer<State, Action> = (state, action) => {
 
     case 'COMMIT': {
       const { message, messageType } = getMessage(input)
-      return { ...state, input: '', message, messageType, found: [...found, input], score: score }
+      return {
+        ...state,
+        input: '',
+        message,
+        messageType,
+        ...(messageType !== MessageType.REJECT
+          ? {
+              score: score + getScore(input),
+              found: [...found, input],
+            }
+          : {}),
+      }
     }
   }
   return state
