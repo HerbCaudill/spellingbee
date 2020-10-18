@@ -1,4 +1,4 @@
-﻿import { isPangram } from './pangrams'
+﻿import { isPangram } from './isPangram'
 
 export const score = (word: string) => {
   if (word.length < 4) return 0
