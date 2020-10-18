@@ -14,8 +14,8 @@ export type Action =
       payload: string
     }
   | { type: 'BACKSPACE' }
-  | { type: 'ESCAPE' }
-  | { type: 'ENTER' }
+  | { type: 'CANCEL' }
+  | { type: 'COMMIT' }
   | { type: 'SHUFFLE' }
 
 export interface AppProps {
@@ -29,4 +29,6 @@ export enum Message {
   'MISSING_KEY',
   'ALREADY_FOUND',
   'GOOD',
+  'EXCELLENT',
+  'PANGRAM',
 }
