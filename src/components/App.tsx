@@ -8,6 +8,7 @@ import { MessageDisplay } from './MessageDisplay'
 import { Grid } from './Grid'
 import { useKeyboard } from '../hooks/useKeyboard'
 import { reducer } from './reducer'
+import { Score } from './Score'
 
 export default function App({ letters }: AppProps) {
   const [keyLetter, ...otherLetters] = letters.split('')
@@ -38,6 +39,7 @@ export default function App({ letters }: AppProps) {
       <InputDisplay input={state.input} scale={30} />
       <div className="mt-3"></div>
       <Grid keyLetter={keyLetter} scale={45} otherLetters={state.otherLetters} />
+      <Score score={state.score} letters={letters}></Score>
       <FoundWords words={state.found} />
     </div>
   )
