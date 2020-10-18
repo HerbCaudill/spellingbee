@@ -1,72 +1,13 @@
-import React, { Reducer, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import { isAlpha } from '../lib/isAlpha'
-import { randomSort } from '../lib/randomSort'
 import { solutions as getSolutions } from '../lib/solutions'
-import { Action, AppProps, State, MessageType } from '../types'
+import { AppProps } from '../types'
 import { FoundWords } from './FoundWords'
 import { InputDisplay } from './InputDisplay'
 import { MessageDisplay } from './MessageDisplay'
 import { Grid } from './Grid'
 import { useKeyboard } from '../hooks/useKeyboard'
-import { isPangram } from '../lib/isPangram'
-
-const reducer: Reducer<State, Action> = (state, action) => {
-  const { input, found, solutions, letters, keyLetter, displayLetters } = state
-  state.message = undefined
-
-  function getAffirmation(input: string) {
-    switch (input.length) {
-      case 4:
-        return 'Good!'
-      case 5:
-        return 'Nice!'
-      case 6:
-      case 7:
-      case 8:
-        return 'Awesome!'
-      default:
-        return 'Excellent!!'
-    }
-  }
-
-  const getMessage = (s: string) => {
-    let message: string | undefined
-    let messageType: MessageType = MessageType.REJECT
-    if (found.includes(s)) message = 'Already found!'
-    else if (s.length < 4) message = 'Too short'
-    else if (!s.includes(keyLetter)) message = 'Missing center letter'
-    else if (s.split('').some(l => !letters.includes(l))) message = 'Bad letters'
-    else if (!solutions.includes(s)) message = 'Not in word list'
-    else if (!isPangram(s)) {
-      messageType = MessageType.ACCEPT
-      message = getAffirmation(input)
-    } else {
-      messageType = MessageType.PANGRAM
-      message = 'Pangram!'
-    }
-    return { message, messageType }
-  }
-
-  switch (action.type) {
-    case 'ALPHA':
-      return { ...state, input: input + action.payload }
-
-    case 'BACKSPACE':
-      return { ...state, input: input.slice(0, input.length - 1) }
-
-    case 'CANCEL':
-      return { ...state, input: '' }
-
-    case 'SHUFFLE':
-      return { ...state, displayLetters: displayLetters.sort(randomSort) }
-
-    case 'COMMIT': {
-      const { message, messageType } = getMessage(input)
-      return { ...state, input: '', message, messageType, found: [...found, input] }
-    }
-  }
-  return state
-}
+import { reducer } from './reducer'
 
 export default function App({ letters }: AppProps) {
   const [keyLetter, ...otherLetters] = letters.split('')
@@ -74,10 +15,11 @@ export default function App({ letters }: AppProps) {
   const initialState = {
     input: '',
     found: [],
+    score: 0,
     letters,
     keyLetter,
+    otherLetters,
     solutions: getSolutions(letters),
-    displayLetters: otherLetters,
   }
 
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -95,7 +37,7 @@ export default function App({ letters }: AppProps) {
       <MessageDisplay message={state.message} messageType={state.messageType} />
       <InputDisplay input={state.input} scale={30} />
       <div className="mt-3"></div>
-      <Grid keyLetter={keyLetter} scale={45} displayLetters={state.displayLetters} />
+      <Grid keyLetter={keyLetter} scale={45} otherLetters={state.otherLetters} />
       <FoundWords words={state.found} />
     </div>
   )
