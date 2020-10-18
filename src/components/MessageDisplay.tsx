@@ -20,8 +20,8 @@ const getColor = (messageType?: MessageType) => {
 }
 export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message, messageType }) => {
   return (
-    <div className={`h-5 text-sm text-center ${getColor(messageType)}`}>
-      {message === undefined ? '' : message}
+    <div className={`h-7 w-24 p-2 m-auto text-sm text-center ${getColor(messageType)}`}>
+      {message === undefined ? <>&nbsp;</> : message}
     </div>
   )
 }
