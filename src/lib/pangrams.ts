@@ -1,5 +1,4 @@
-﻿import { distinctLetters } from './distinctLetters'
+﻿import { isPangram } from './isPangram'
 import { words } from './words'
 
-export const isPangram = (word: string): boolean => distinctLetters(word).length === 7
 export const pangrams = words.filter(isPangram)
