@@ -1,27 +1,14 @@
 import React from 'react'
 import { Hexagon } from './Hexagon'
 
-export const Grid = ({
-  keyLetter,
-  displayLetters,
-  scale,
-}: {
+type GridProps = {
   keyLetter: string
-  displayLetters: string[]
+  otherLetters: string[]
   scale: number
-}) => {
-  const position = (i: number) => {
-    const SQRT_3 = Math.sqrt(3)
-    const hexagonVertices = [
-      [2, SQRT_3],
-      [1, 0],
-      [3, 0],
-      [4, SQRT_3],
-      [3, 2 * SQRT_3],
-      [1, 2 * SQRT_3],
-      [0, SQRT_3],
-    ]
+}
 
+export const Grid = ({ keyLetter, otherLetters, scale }: GridProps) => {
+  const position = (i: number) => {
     const [x, y] = hexagonVertices[i]
     return { x: x * scale, y: y * scale }
   }
@@ -29,7 +16,7 @@ export const Grid = ({
   const size = scale * 6
   return (
     <div className="m-auto relative" style={{ height: size, width: size }}>
-      {displayLetters.map((letter, i) => (
+      {otherLetters.map((letter, i) => (
         <Hexagon
           key={i}
           scale={scale}
@@ -47,3 +34,14 @@ export const Grid = ({
     </div>
   )
 }
+
+const SQRT_3 = Math.sqrt(3)
+const hexagonVertices = [
+  [2, SQRT_3],
+  [1, 0],
+  [3, 0],
+  [4, SQRT_3],
+  [3, 2 * SQRT_3],
+  [1, 2 * SQRT_3],
+  [0, SQRT_3],
+]
