@@ -1,5 +1,17 @@
 import React from 'react'
 
-export const InputDisplay = ({ input }: { input: string }) => {
-  return <div className="text-center h-12 font-bold tracking-wider text-xl">{input}</div>
+const Cursor: React.FC<{ scale: number }> = ({ scale }) => (
+  <div
+    className="inline-block bg-yellow-500 relative animate-blink"
+    style={{ top: scale * 0.2, width: 2, height: scale * 1.2 }}
+  ></div>
+)
+
+export const InputDisplay: React.FC<{ input: string; scale: number }> = ({ input, scale }) => {
+  return (
+    <div className="text-center h-12 font-bold tracking-wider" style={{ fontSize: scale }}>
+      {input}
+      <Cursor scale={scale}></Cursor>
+    </div>
+  )
 }
