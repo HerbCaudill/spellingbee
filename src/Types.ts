@@ -1,10 +1,12 @@
 export interface State {
   input: string
   found: string[]
-  message?: Message
+  score: number
+  message?: string
+  messageType?: MessageType
   letters: string
   keyLetter: string
-  displayLetters: string[]
+  otherLetters: string[]
   solutions: string[]
 }
 
@@ -22,13 +24,8 @@ export interface AppProps {
   letters: string
 }
 
-export enum Message {
-  'NOT_A_WORD',
-  'TOO_SHORT',
-  'BAD_LETTERS',
-  'MISSING_KEY',
-  'ALREADY_FOUND',
-  'GOOD',
-  'EXCELLENT',
-  'PANGRAM',
+export enum MessageType {
+  REJECT,
+  ACCEPT,
+  PANGRAM,
 }
