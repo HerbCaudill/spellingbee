@@ -68,7 +68,7 @@ export default function App({ letters }: AppProps) {
   })
 
   return (
-    <div>
+    <div className="max-w-md m-auto">
       <MessageDisplay message={state.message} />
       <InputDisplay input={state.input} />
       <Puzzle keyLetter={keyLetter} displayLetters={state.displayLetters} />
