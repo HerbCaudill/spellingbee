@@ -9,19 +9,27 @@ type MessageDisplayProps = {
 const getColor = (messageType?: MessageType) => {
   switch (messageType) {
     case MessageType.REJECT:
-      return 'bg-black border-black'
+      return 'bg-black border border-black text-white'
     case MessageType.ACCEPT:
-      return 'bg-white border-black'
+      return 'bg-white border border-gray-500'
     case MessageType.PANGRAM:
-      return 'bg-yellow-500 border-yellow-600'
+      return 'bg-yellow-500 border border-yellow-600'
     default:
-      return ''
+      return 'border-transparent'
   }
 }
 export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message, messageType }) => {
   return (
-    <div className={`h-7 w-24 p-2 m-auto text-sm text-center ${getColor(messageType)}`}>
-      {message === undefined ? <>&nbsp;</> : message}
+    <div className="text-center">
+      <div
+        className={`
+          h-7 mx-auto min-w-0 py-1 px-3 inline-block
+          text-sm text-center
+          border rounded-md ${getColor(messageType)} 
+          whitespace-no-wrap`}
+      >
+        {message === undefined ? <>&nbsp;</> : message}
+      </div>
     </div>
   )
 }
