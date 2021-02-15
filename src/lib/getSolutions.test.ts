@@ -1,8 +1,8 @@
-import { solutions } from './solutions'
+import { getSolutions } from './getSolutions'
 
 describe('solutions', () => {
   test('TVIRUAL', () => {
-    const words = solutions('TVIRUAL')
+    const words = getSolutions('TVIRUAL')
 
     expect(words).not.toContain('BANANA')
     expect(words).toContain('VIRTUAL')
@@ -12,7 +12,7 @@ describe('solutions', () => {
   })
 
   test('VTIRUAL', () => {
-    const words = solutions('VTIRUAL')
+    const words = getSolutions('VTIRUAL')
 
     expect(words).not.toContain('BANANA')
     expect(words).toContain('VIRTUAL')

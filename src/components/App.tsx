@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import { isAlpha } from '../lib/isAlpha'
-import { solutions as getSolutions } from '../lib/solutions'
+import { getSolutions } from '../lib/getSolutions'
 import { AppProps } from '../types'
 import { FoundWords } from './FoundWords'
 import { InputDisplay } from './InputDisplay'
@@ -36,9 +36,14 @@ export default function App({ letters }: AppProps) {
   return (
     <div className="max-w-xl m-auto">
       <MessageDisplay message={state.message} messageType={state.messageType} />
-      <InputDisplay input={state.input} scale={30} />
+      <InputDisplay
+        input={state.input}
+        keyLetter={keyLetter}
+        otherLetters={otherLetters}
+        scale={30}
+      />
       <div className="mt-3"></div>
-      <Grid keyLetter={keyLetter} scale={45} otherLetters={state.otherLetters} />
+      <Grid keyLetter={keyLetter} otherLetters={state.otherLetters} scale={45} />
       <Score score={state.score} letters={letters}></Score>
       <FoundWords words={state.found} />
     </div>

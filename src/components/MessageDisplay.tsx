@@ -23,7 +23,7 @@ export const MessageDisplay: React.FC<MessageDisplayProps> = ({ message, message
     <div className="text-center">
       <div
         className={`
-          h-7 mx-auto min-w-0 py-1 px-3 inline-block
+          h-7 mx-auto my-3 min-w-0 py-1 px-3 inline-block
           text-sm text-center
           border rounded-md ${getColor(messageType)} 
           whitespace-no-wrap`}

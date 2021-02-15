@@ -26,12 +26,15 @@ export const reducer: Reducer<State, Action> = (state, action) => {
 
   const getMessage = (s: string) => {
     let message: string | undefined
+
+    // rejections
     let messageType: MessageType = MessageType.REJECT
     if (found.includes(s)) message = 'Already found!'
     else if (s.length < 4) message = 'Too short'
     else if (!s.includes(keyLetter)) message = 'Missing center letter'
     else if (s.split('').some(l => !letters.includes(l))) message = 'Bad letters'
     else if (!solutions.includes(s)) message = 'Not in word list'
+    // affirmations
     else if (!isPangram(s)) {
       messageType = MessageType.ACCEPT
       message = getAffirmation(input)
@@ -71,5 +74,4 @@ export const reducer: Reducer<State, Action> = (state, action) => {
       }
     }
   }
-  return state
 }

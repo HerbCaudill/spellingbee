@@ -2,7 +2,7 @@
 import words from '../data/en.json'
 import memoize from 'fast-memoize'
 
-export const solutions = memoize((letters: string) => {
+export const getSolutions = memoize((letters: string) => {
   if (letters.length !== 7) throw new Error('A game has exactly 7 letters')
   if (distinctLetters(letters).length !== 7) throw new Error('All 7 letters must be distinct')
   const keyLetter = letters[0]
